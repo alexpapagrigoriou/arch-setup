@@ -1,0 +1,13 @@
+Check if soft blocked:
+rfkill list
+
+If soft blocked:
+rfkill unblock all
+
+Connect:
+iwctl
+device list
+station wlan0 scan
+station wlan0 get-networks
+station wlan0 connect "Network Name"
+exit

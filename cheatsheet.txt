@@ -1,0 +1,7 @@
+fastfetch # shows system info
+sudo grub-customizer # customize grub
+arandr # set up monitors
+lxappearance # set up theme
+pavucontrol # set up audio
+xprop # see window properties
+cloc # count lines of code
