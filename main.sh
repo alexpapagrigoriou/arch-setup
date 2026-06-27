@@ -211,6 +211,10 @@ interval=1
 command=~/.config/i3blocks/battery.sh
 interval=10
 
+[date]
+command=~/.config/i3blocks/date.sh
+interval=60
+
 [time]
 command=~/.config/i3blocks/time.sh
 interval=1
@@ -362,10 +366,17 @@ echo "$COLOR"
 EOF
 chmod +x "$HOME/.config/i3blocks/battery.sh"
 
+cat >"$HOME/.config/i3blocks/date.sh" <<'EOF'
+#!/bin/bash
+
+date "+%Y-%m-%d"
+EOF
+chmod +x "$HOME/.config/i3blocks/date.sh"
+
 cat >"$HOME/.config/i3blocks/time.sh" <<'EOF'
 #!/bin/bash
 
-date "+%Y-%m-%d | %H:%M:%S"
+date "+%H:%M:%S"
 EOF
 chmod +x "$HOME/.config/i3blocks/time.sh"
 
