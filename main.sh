@@ -173,6 +173,7 @@ bindsym $mod2+k exec --no-startup-id pamixer --increase 5
 bindsym $mod+Shift+g exec --no-startup-id firefox --new-window
 bindsym $mod+Shift+y exec --no-startup-id firefox --new-window "youtube.com"
 bindsym $mod+Shift+t exec --no-startup-id firefox --new-window "github.com"
+bindsym $mod+Shift+b exec --no-startup-id firefox --new-window "gitlab.com"
 bindsym $mod+Shift+m exec --no-startup-id firefox --new-window "mail.google.com"
 
 bindsym $mod+Shift+p exec --no-startup-id kolourpaint
