@@ -29,3 +29,7 @@ Host github.com
     AddKeysToAgent yes
 EOF
 chmod 600 "$HOME/.ssh/config"
+
+echo ""
+echo "Public SSH key:"
+cat "${KEY_PATH}.pub"

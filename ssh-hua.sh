@@ -46,3 +46,11 @@ Host github-hua.com
     AddKeysToAgent yes
 EOF
 chmod 600 "$HOME/.ssh/config"
+
+echo ""
+echo "Public SSH key1:"
+cat "${KEY1_PATH}.pub"
+
+echo ""
+echo "Public SSH key2:"
+cat "${KEY2_PATH}.pub"
