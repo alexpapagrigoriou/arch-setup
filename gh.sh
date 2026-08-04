@@ -18,6 +18,8 @@ cat >"$HOME/.gitconfig" <<EOF
 	autocrlf = input
 EOF
 
+mkdir -p "$HOME/.local/bin"
+
 cat >"$HOME/.local/bin/git-remote-setup" <<'EOF'
 #!/bin/bash
 
