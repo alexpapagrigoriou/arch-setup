@@ -4,7 +4,7 @@ set -e
 
 sudo pacman -Syu --noconfirm
 
-sudo pacman -S --noconfirm base-devel fastfetch cloc less feh gcc clang make bear gdb valgrind jdk21-openjdk maven gradle tree xclip git git-filter-repo zsh curl wget powerline-fonts ripgrep fd lua51 luarocks python python-pip python-pynvim neovim nodejs npm tmux zip unzip md-tui zathura zathura-pdf-poppler
+sudo pacman -S --noconfirm base-devel fastfetch cloc less feh xss-lock gcc clang make bear gdb valgrind jdk21-openjdk maven gradle tree xclip git git-filter-repo zsh curl wget powerline-fonts ripgrep fd lua51 luarocks python python-pip python-pynvim neovim nodejs npm tmux zip unzip md-tui zathura zathura-pdf-poppler
 sudo pacman -S --noconfirm arandr pavucontrol lxappearance pamixer brightnessctl xorg-xprop xorg-xset alacritty kolourpaint
 
 sudo npm install -g neovim
@@ -138,21 +138,6 @@ assign [class="discord"] $ws10
 for_window [class="nmtui"] floating enable
 for_window [workspace=$ws8] layout stacking
 
-#set $mon1 ""
-#set $mon2 ""
-#set $mon3 ""
-
-#workspace $ws1 output $mon2
-#workspace $ws2 output $mon2
-#workspace $ws3 output $mon1
-#workspace $ws4 output $mon1
-#workspace $ws5 output $mon1
-#workspace $ws6 output $mon1
-#workspace $ws7 output $mon1
-#workspace $ws8 output $mon3
-#workspace $ws9 output $mon3
-#workspace $ws10 output $mon3
-
 bindsym $mod+Return exec --no-startup-id alacritty
 bindsym $mod+Shift+Return exec --no-startup-id alacritty --class="main"
 bindsym $mod+Shift+q kill
@@ -180,11 +165,38 @@ bindsym $mod+Shift+p exec --no-startup-id kolourpaint
 bindsym $mod+Shift+i exec --no-startup-id idea
 bindsym $mod+Shift+d exec --no-startup-id discord
 
+#set $mon1 ""
+#set $mon2 ""
+#set $mon3 ""
+
+#workspace $ws1 output $mon2
+#workspace $ws2 output $mon2
+#workspace $ws3 output $mon1
+#workspace $ws4 output $mon1
+#workspace $ws5 output $mon1
+#workspace $ws6 output $mon1
+#workspace $ws7 output $mon1
+#workspace $ws8 output $mon3
+#workspace $ws9 output $mon3
+#workspace $ws10 output $mon3
+
 #exec_always --no-startup-id ~/.config/i3/monitors.sh
 #exec_always --no-startup-id feh --bg-scale ~/.config/i3/wallpaper.png
 
-#exec --no-startup-id alacritty
+exec --no-startup-id xset s 0 0 dpms 0 0 600
+exec --no-startup-id xss-lock --transfer-sleep-lock -- ~/.config/i3/lock.sh
 EOF
+
+cat >"$HOME/.config/i3/lock.sh" <<'EOF'
+#!/bin/bash
+
+if pgrep -x i3lock >/dev/null; then
+    exit
+fi
+
+i3lock --color "#000000"
+EOF
+chmod +x "$HOME/.config/i3/lock.sh"
 
 mkdir -p "$HOME/.config/i3blocks"
 cat >"$HOME/.config/i3blocks/config" <<'EOF'
