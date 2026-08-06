@@ -44,6 +44,11 @@ sudo mkfs.exfat /dev/sdX1
 (for mkfs.exfat)
 sudo pacman -S --noconfirm exfatprogs
 
+Eject the USB:
+sudo eject /dev/sdX
+
+Unplug the USB
+
 ---
 
 Example for sda:
@@ -76,3 +81,5 @@ sudo umount /mnt/sda1
 
 For Linux and Windows:
 sudo mkfs.exfat /dev/sda1
+
+sudo eject /dev/sda

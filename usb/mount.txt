@@ -38,6 +38,9 @@ sudo umount /mnt/usb
 To check if MOUNTPOINTS is empty run:
 lsblk
 
+Eject the USB:
+sudo eject /dev/sdX
+
 Unplug the USB
 
 ---
@@ -51,3 +54,4 @@ Edit USB from /mnt/usb/...
 
 sync
 sudo umount /mnt/usb
+sudo eject /dev/sda
