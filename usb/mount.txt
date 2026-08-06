@@ -1,0 +1,53 @@
+Plug in the USB
+
+Run:
+lsblk
+
+To confirm which is the USB:
+lsblk -S
+
+Output:
+NAME   ...
+sdX    ...
+└─sdX1 ...
+
+If MOUNTPOINTS is empty run:
+sudo mkdir -p /mnt/usb
+sudo mount /dev/sdX1 /mnt/usb
+
+To check MOUNTPOINTS run:
+lsblk
+
+Edit USB from /mnt/usb/...
+
+Example:
+cp /mnt/usb/file.txt ~/
+cp -r /mnt/usb/folder ~/
+
+cp ~/file.txt /mnt/usb/
+cp -r ~/folder /mnt/usb/
+
+ls /mnt/usb
+
+Flush the USB:
+sync
+
+Dismount the USB:
+sudo umount /mnt/usb
+
+To check if MOUNTPOINTS is empty run:
+lsblk
+
+Unplug the USB
+
+---
+
+Example for sda:
+
+If MOUNTPOINTS is empty run:
+sudo mount /dev/sda1 /mnt/usb
+
+Edit USB from /mnt/usb/...
+
+sync
+sudo umount /mnt/usb

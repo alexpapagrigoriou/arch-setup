@@ -1,0 +1,78 @@
+Plug in the USB
+
+Run:
+lsblk
+
+To confirm which is the USB:
+lsblk -S
+
+Output:
+NAME   ...
+sdX    ...
+└─sdX1 ...
+
+If MOUNTPOINTS is not empty run:
+sudo umount /mnt/sdX1
+
+Remove USB metadata:
+sudo wipefs -a /dev/sdX
+sudo sgdisk --zap-all /dev/sdX
+(for sgdisk)
+sudo pacman -S --noconfirm gptfdisk
+
+Or completely wipe the USB:
+sudo dd if=/dev/zero of=/dev/sdX bs=4M status=progress
+
+Create a new partition:
+sudo parted /dev/sdX mklabel gpt
+sudo parted -a optimal /dev/sdX mkpart primary ext4 0% 100%
+
+See the partition:
+lsblk
+
+Format the partition:
+
+For Linux-only:
+sudo mkfs.ext4 /dev/sdX1
+sudo mkdir -p /mnt/usb
+sudo mount /dev/sdX1 /mnt/usb
+sudo chown -R $USER:$USER /mnt/usb
+sudo umount /mnt/sdX1
+
+For Linux and Windows:
+sudo mkfs.exfat /dev/sdX1
+(for mkfs.exfat)
+sudo pacman -S --noconfirm exfatprogs
+
+---
+
+Example for sda:
+
+If MOUNTPOINTS is not empty run:
+sudo umount /mnt/sda1
+
+Remove USB metadata:
+sudo wipefs -a /dev/sda
+sudo sgdisk --zap-all /dev/sda
+
+Or completely wipe the USB:
+sudo dd if=/dev/zero of=/dev/sda bs=4M status=progress
+
+Create a new partition:
+sudo parted /dev/sda mklabel gpt
+sudo parted -a optimal /dev/sda mkpart primary ext4 0% 100%
+
+See the partition:
+lsblk
+
+Format the partition:
+
+For Linux-only:
+sudo mkfs.ext4 /dev/sda1
+sudo mkdir -p /mnt/usb
+sudo mount /dev/sda1 /mnt/usb
+sudo chown -R $USER:$USER /mnt/usb
+sudo umount /mnt/sda1
+
+For Linux and Windows:
+sudo mkfs.exfat /dev/sda1
