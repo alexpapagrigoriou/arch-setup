@@ -183,7 +183,10 @@ bindsym $mod+Shift+d exec --no-startup-id discord
 #exec_always --no-startup-id ~/.config/i3/monitors.sh
 #exec_always --no-startup-id feh --bg-scale ~/.config/i3/wallpaper.png
 
-exec --no-startup-id xset s 0 0 dpms 0 0 600
+exec --no-startup-id xset b 0 0 0
+exec --no-startup-id xset s 0 0
+exec --no-startup-id xset dpms 0 0 600
+
 exec --no-startup-id xss-lock --transfer-sleep-lock -- ~/.config/i3/lock.sh
 EOF
 
