@@ -1,6 +1,0 @@
-git filter-repo --commit-callback '
-commit.author_name = b"Alexandros Papagrigoriou"
-commit.author_email = b"apapagrigoriou17@gmail.com"
-commit.committer_name = b"Alexandros Papagrigoriou"
-commit.committer_email = b"apapagrigoriou17@gmail.com"
-'
