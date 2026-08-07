@@ -4,7 +4,7 @@ set -e
 
 sudo pacman -Syu --noconfirm
 
-sudo pacman -S --noconfirm base-devel fastfetch cloc less feh xss-lock gcc clang make bear gdb valgrind jdk21-openjdk maven gradle tree xclip git git-filter-repo zsh curl wget powerline-fonts ripgrep fd lua51 luarocks python python-pip python-pynvim neovim nodejs npm tmux zip unzip
+sudo pacman -S --noconfirm base-devel fastfetch cloc less bc feh xss-lock gcc clang make bear gdb valgrind jdk21-openjdk maven gradle tree xclip git git-filter-repo zsh curl wget powerline-fonts ripgrep fd lua51 luarocks python python-pip python-pynvim neovim nodejs npm tmux zip unzip
 sudo pacman -S --noconfirm arandr pavucontrol lxappearance pamixer brightnessctl xorg-xprop xorg-xset alacritty kolourpaint md-tui zathura zathura-pdf-poppler
 
 sudo npm install -g neovim
@@ -427,7 +427,7 @@ chmod +x "$HOME/.config/i3blocks/keyboard.sh"
 cat >"$HOME/.config/i3blocks/network.sh" <<'EOF'
 #!/bin/bash
 
-SSID=$(iwgetid -r)
+SSID=$(nmcli -t -f active,ssid dev wifi | awk -F: '$1=="yes"{print $2}')
 
 if [ -z "$SSID" ]; then
     echo "No network"
