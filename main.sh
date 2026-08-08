@@ -14,6 +14,9 @@ sudo pacman -Syu --noconfirm
 sudo pacman -S --noconfirm base-devel fastfetch cloc less bc feh xss-lock dunst libnotify gcc clang make bear gdb valgrind jdk21-openjdk maven gradle tree xclip git git-filter-repo zsh curl wget powerline-fonts ripgrep fd lua51 luarocks python python-pip python-pynvim neovim nodejs npm tmux zip unzip
 sudo pacman -S --noconfirm arandr pavucontrol lxappearance pamixer brightnessctl xorg-xprop xorg-xset alacritty kolourpaint md-tui zathura zathura-pdf-poppler
 
+sudo pacman -S --noconfirm gptfdisk exfatprogs
+sudo mkdir -p /mnt/usb
+
 sudo npm install -g neovim
 
 sudo mkdir -p /etc/X11/xorg.conf.d
