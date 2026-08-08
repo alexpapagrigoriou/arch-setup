@@ -369,19 +369,33 @@ fi
 STATUS=$(cat "$BATTERY/status")
 CAPACITY=$(cat "$BATTERY/capacity")
 
-LOW_STATE_FILE="/tmp/battery-low-notification"
-CHARGED_STATE_FILE="/tmp/battery-charged-notification"
+STATE_FILE="/tmp/battery-notification"
 
 notify_charged_battery() {
     local capacity="$1"
+    local level="80"
 
-    if [ ! -f "$CHARGED_STATE_FILE" ]; then
+    if [ ! -f "$STATE_FILE" ] || [ "$(cat "$STATE_FILE")" != "$level" ]; then
         notify-send \
             -u normal \
             "Battery charged" \
             "${capacity}% battery charged."
 
-        touch "$CHARGED_STATE_FILE"
+        echo "$level" >"$STATE_FILE"
+    fi
+}
+
+notify_full_battery() {
+    local capacity="$1"
+    local level="FULL"
+
+    if [ ! -f "$STATE_FILE" ] || [ "$(cat "$STATE_FILE")" != "$level" ]; then
+        notify-send \
+            -u critical \
+            "Battery full" \
+            "${capacity}% battery charged."
+
+        echo "$level" >"$STATE_FILE"
     fi
 }
 
@@ -390,47 +404,76 @@ notify_low_battery() {
     local level
 
     if [ "$capacity" -le 5 ]; then
-        level="5"
+        level="LOW 5"
     else
-        level="20"
+        level="LOW 20"
     fi
 
-    if [ ! -f "$LOW_STATE_FILE" ] || [ "$(cat "$LOW_STATE_FILE")" != "$level" ]; then
+    if [ ! -f "$STATE_FILE" ] || [ "$(cat "$STATE_FILE")" != "$level" ]; then
         notify-send \
             -u critical \
             "Battery low" \
             "${capacity}% battery remaining."
 
-        echo "$level" >"$LOW_STATE_FILE"
+        echo "$level" >"$STATE_FILE"
+    fi
+}
+
+notify_not_charging_battery() {
+    local capacity="$1"
+    local level="NOT CHG"
+
+    if [ ! -f "$STATE_FILE" ] || [ "$(cat "$STATE_FILE")" != "$level" ]; then
+        notify-send \
+            -u critical \
+            "Battery not charging" \
+            "${capacity}% battery remaining."
+
+        echo "$level" >"$STATE_FILE"
     fi
 }
 
 if [ "$STATUS" = "Charging" ]; then
     LABEL="CHG"
 
-    rm -f "$LOW_STATE_FILE"
-
     if [ "$CAPACITY" -ge 80 ]; then
         COLOR="$RED"
         notify_charged_battery "$CAPACITY"
     elif [ "$CAPACITY" -ge 70 ]; then
         COLOR="$YELLOW"
+        echo "CHG" >"$STATE_FILE"
     else
         COLOR="$GREEN"
+        echo "CHG" >"$STATE_FILE"
     fi
-else
-    LABEL="BAT"
+elif [ "$STATUS" = "Full" ]; then
+    LABEL="CHG"
+    COLOR="$RED"
 
-    rm -f "$CHARGED_STATE_FILE"
+    notify_full_battery "$CAPACITY"
+elif [ "$STATUS" = "Discharging" ]; then
+    LABEL="BAT"
 
     if [ "$CAPACITY" -le 20 ]; then
         COLOR="$RED"
         notify_low_battery "$CAPACITY"
     elif [ "$CAPACITY" -le 30 ]; then
         COLOR="$YELLOW"
+        echo "BAT" >"$STATE_FILE"
     else
         COLOR="$GREEN"
+        echo "BAT" >"$STATE_FILE"
     fi
+elif [ "$STATUS" = "Not charging" ]; then
+    LABEL="NOT CHG"
+    COLOR="$RED"
+
+    notify_not_charging_battery "$CAPACITY"
+else
+    LABEL="UNKNOWN"
+    COLOR="$YELLOW"
+
+    rm -f "$STATE_FILE"
 fi
 
 echo "$LABEL $CAPACITY%"
