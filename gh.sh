@@ -48,7 +48,7 @@ git remote add origin "$GITHUB_REPO_URL"
 git remote set-url --add --push origin "$GITHUB_REPO_URL"
 git remote set-url --add --push origin "$GITLAB_REPO_URL"
 
-echo "Remote configured for $REPO_NAME"
+git fetch
 EOF
 chmod +x "$HOME/.local/bin/git-remote-setup"
 
