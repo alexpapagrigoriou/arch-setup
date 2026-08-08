@@ -655,4 +655,4 @@ rm -rf "$HOME/.tmux/plugins/tpm"
 git clone https://github.com/tmux-plugins/tpm "$HOME"/.tmux/plugins/tpm
 
 echo ""
-echo "Open tmux and press prefix + I to install plugins"
+echo "reboot"
