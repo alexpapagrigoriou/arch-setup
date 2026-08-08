@@ -2,9 +2,16 @@
 
 set -e
 
+if [ -f "yay.sh" ]; then
+    ./yay.sh
+    rm yay.sh
+
+    yay -S --noconfirm xidlehook
+fi
+
 sudo pacman -Syu --noconfirm
 
-sudo pacman -S --noconfirm base-devel fastfetch cloc less bc feh xss-lock gcc clang make bear gdb valgrind jdk21-openjdk maven gradle tree xclip git git-filter-repo zsh curl wget powerline-fonts ripgrep fd lua51 luarocks python python-pip python-pynvim neovim nodejs npm tmux zip unzip
+sudo pacman -S --noconfirm base-devel fastfetch cloc less bc feh xss-lock dunst libnotify gcc clang make bear gdb valgrind jdk21-openjdk maven gradle tree xclip git git-filter-repo zsh curl wget powerline-fonts ripgrep fd lua51 luarocks python python-pip python-pynvim neovim nodejs npm tmux zip unzip
 sudo pacman -S --noconfirm arandr pavucontrol lxappearance pamixer brightnessctl xorg-xprop xorg-xset alacritty kolourpaint md-tui zathura zathura-pdf-poppler
 
 sudo npm install -g neovim
@@ -142,7 +149,7 @@ bindsym $mod+Return exec --no-startup-id alacritty
 bindsym $mod+Shift+Return exec --no-startup-id alacritty --class="main"
 bindsym $mod+Shift+q kill
 bindsym $mod+d exec --no-startup-id dmenu_run
-bindsym $mod2+l exec i3lock --color "#000000"
+bindsym $mod2+l exec ~/.config/i3/screen-off.sh
 bindsym $mod2+Escape exec poweroff
 bindsym $mod2+Shift+Escape exec reboot
 bindsym $mod2+n exec --no-startup-id alacritty --class="nmtui" -e nmtui
@@ -165,9 +172,9 @@ bindsym $mod+Shift+p exec --no-startup-id kolourpaint
 bindsym $mod+Shift+i exec --no-startup-id idea
 bindsym $mod+Shift+d exec --no-startup-id discord
 
-#set $mon1 ""
-#set $mon2 ""
-#set $mon3 ""
+set $mon1 ""
+set $mon2 ""
+set $mon3 ""
 
 #workspace $ws1 output $mon2
 #workspace $ws2 output $mon2
@@ -180,14 +187,12 @@ bindsym $mod+Shift+d exec --no-startup-id discord
 #workspace $ws9 output $mon3
 #workspace $ws10 output $mon3
 
-#exec_always --no-startup-id ~/.config/i3/monitors.sh
-#exec_always --no-startup-id feh --bg-scale ~/.config/i3/wallpaper.png
+exec_always --no-startup-id ~/.config/i3/monitors.sh
+exec_always --no-startup-id feh --bg-scale ~/.config/i3/wallpaper.png
 
-exec --no-startup-id xset b 0 0 0
-exec --no-startup-id xset s 0 0
-exec --no-startup-id xset dpms 0 0 600
-
+exec --no-startup-id xset b 0 0 0 s 00 dpms 0 0 0
 exec --no-startup-id xss-lock --transfer-sleep-lock -- ~/.config/i3/lock.sh
+exec --no-startup-id ~/.config/i3/idle.sh
 EOF
 
 cat >"$HOME/.config/i3/lock.sh" <<'EOF'
@@ -200,6 +205,13 @@ fi
 i3lock --color "#000000"
 EOF
 chmod +x "$HOME/.config/i3/lock.sh"
+
+cat >"$HOME/.config/i3/screen-off.sh" <<'EOF'
+#!/bin/bash
+
+xset dpms force off
+EOF
+chmod +x "$HOME/.config/i3/screen-off.sh"
 
 mkdir -p "$HOME/.config/i3blocks"
 cat >"$HOME/.config/i3blocks/config" <<'EOF'
@@ -225,7 +237,7 @@ interval=1
 
 [battery]
 command=~/.config/i3blocks/battery.sh
-interval=10
+interval=30
 
 [date]
 command=~/.config/i3blocks/date.sh
@@ -344,21 +356,60 @@ RED="#FF3333"
 YELLOW="#FFFF00"
 GREEN="#00FF00"
 
-BAT_PATH="/sys/class/power_supply/BAT0"
+BATTERY="/sys/class/power_supply/BAT0"
 
-if [ ! -d "$BAT_PATH" ]; then
+if [ ! -d "$BATTERY" ]; then
     echo "No battery"
     exit 0
 fi
 
-STATUS=$(cat "$BAT_PATH/status")
-CAPACITY=$(cat "$BAT_PATH/capacity")
+STATUS=$(cat "$BATTERY/status")
+CAPACITY=$(cat "$BATTERY/capacity")
+
+LOW_STATE_FILE="/tmp/battery-low-notification"
+CHARGED_STATE_FILE="/tmp/battery-charged-notification"
+
+notify_charged_battery() {
+    local capacity="$1"
+
+    if [ ! -f "$CHARGED_STATE_FILE" ]; then
+        notify-send \
+            -u normal \
+            "Battery charged" \
+            "${capacity}% battery charged."
+
+        touch "$CHARGED_STATE_FILE"
+    fi
+}
+
+notify_low_battery() {
+    local capacity="$1"
+    local level
+
+    if [ "$capacity" -le 5 ]; then
+        level="5"
+    else
+        level="20"
+    fi
+
+    if [ ! -f "$LOW_STATE_FILE" ] || [ "$(cat "$LOW_STATE_FILE")" != "$level" ]; then
+        notify-send \
+            -u critical \
+            "Battery low" \
+            "${capacity}% battery remaining."
+
+        echo "$level" >"$LOW_STATE_FILE"
+    fi
+}
 
 if [ "$STATUS" = "Charging" ]; then
     LABEL="CHG"
 
+    rm -f "$LOW_STATE_FILE"
+
     if [ "$CAPACITY" -ge 80 ]; then
         COLOR="$RED"
+        notify_charged_battery "$CAPACITY"
     elif [ "$CAPACITY" -ge 70 ]; then
         COLOR="$YELLOW"
     else
@@ -367,8 +418,11 @@ if [ "$STATUS" = "Charging" ]; then
 else
     LABEL="BAT"
 
+    rm -f "$CHARGED_STATE_FILE"
+
     if [ "$CAPACITY" -le 20 ]; then
         COLOR="$RED"
+        notify_low_battery "$CAPACITY"
     elif [ "$CAPACITY" -le 30 ]; then
         COLOR="$YELLOW"
     else
