@@ -1,0 +1,19 @@
+Mirrors and repositories -> Select regions -> Greece
+
+Disk configuration -> Partitioning -> Use a best-effort... -> Select the disk -> ext4 -> Yes
+
+Bootloader -> Bootloader -> Grub
+
+Authentication -> Root password -> Set a password
+               -> User account -> Add a user -> Set user -> Yes
+                               -> Confirm and exit
+
+Profile -> Type -> Desktop -> i3-wm
+
+Applications -> Audio -> pipewire
+
+Network configuration -> Use Network Manager (default backend)
+
+Timezone -> Europe/Athens
+
+Install
