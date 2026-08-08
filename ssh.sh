@@ -27,6 +27,12 @@ Host github.com
     User git
     IdentityFile ~/.ssh/id_ed25519
     AddKeysToAgent yes
+
+Host gitlab.com
+    HostName gitlab.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519
+    AddKeysToAgent yes
 EOF
 chmod 600 "$HOME/.ssh/config"
 
