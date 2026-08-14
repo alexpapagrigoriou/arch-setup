@@ -17,6 +17,9 @@ menuentry "Windows 11" {
 }
 
 Run:
+sudo chmod -x /etc/grub.d/30_uefi-firmware
+
+Run:
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 reboot
