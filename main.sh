@@ -171,6 +171,7 @@ bindsym $mod+Shift+t exec --no-startup-id firefox --new-window "github.com"
 bindsym $mod+Shift+b exec --no-startup-id firefox --new-window "gitlab.com"
 bindsym $mod+Shift+m exec --no-startup-id firefox --new-window "mail.google.com"
 
+bindsym $mod+Shift+f exec --no-startup-id thunar
 bindsym $mod+Shift+p exec --no-startup-id kolourpaint
 bindsym $mod+Shift+i exec --no-startup-id idea
 bindsym $mod+Shift+d exec --no-startup-id discord
