@@ -1,4 +1,5 @@
 fastfetch # shows system info
+vifm # terminal file manager
 arandr # set up monitors
 lxappearance # set up theme
 pavucontrol # set up audio
