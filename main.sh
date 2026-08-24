@@ -12,7 +12,7 @@ fi
 sudo pacman -Syu --noconfirm
 
 sudo pacman -S --noconfirm base-devel fastfetch cloc less bc feh xss-lock dunst libnotify man-db man-pages gcc clang make bear gdb valgrind jdk21-openjdk maven gradle tree xclip git git-filter-repo zsh curl wget powerline-fonts ripgrep fd lua51 luarocks python python-pip python-pynvim neovim nodejs npm tmux zip unzip
-sudo pacman -S --noconfirm arandr vifm pavucontrol lxappearance pamixer brightnessctl xorg-xprop xorg-xset alacritty kolourpaint md-tui zathura zathura-pdf-poppler
+sudo pacman -S --noconfirm arandr vifm pavucontrol lxappearance pamixer brightnessctl xorg-xprop xorg-xset alacritty gimp md-tui zathura zathura-pdf-poppler
 
 sudo pacman -S --noconfirm gptfdisk exfatprogs
 sudo mkdir -p /mnt/usb
@@ -172,7 +172,7 @@ bindsym $mod+Shift+b exec --no-startup-id firefox --new-window "gitlab.com"
 bindsym $mod+Shift+m exec --no-startup-id firefox --new-window "mail.google.com"
 
 bindsym $mod+Shift+f exec --no-startup-id thunar
-bindsym $mod+Shift+p exec --no-startup-id kolourpaint
+bindsym $mod+Shift+p exec --no-startup-id gimp
 bindsym $mod+Shift+i exec --no-startup-id idea
 bindsym $mod+Shift+d exec --no-startup-id discord
 
