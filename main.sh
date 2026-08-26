@@ -654,12 +654,19 @@ break-system-packages = true
 EOF
 
 cat >"$HOME/.clang-format" <<'EOF'
-BasedOnStyle: Google
+BasedOnStyle: LLVM
+
 IndentWidth: 4
 TabWidth: 4
 UseTab: Never
-AllowShortIfStatementsOnASingleLine: false
+
 ColumnLimit: 0
+
+PointerAlignment: Right
+
+AllowShortIfStatementsOnASingleLine: false
+AllowShortEnumsOnASingleLine: false
+
 BreakBeforeBraces: Attach
 SpaceBeforeParens: ControlStatements
 SortIncludes: true
