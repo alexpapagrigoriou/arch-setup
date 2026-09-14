@@ -1,6 +1,7 @@
 fastfetch # shows system info
 vifm # terminal file manager
-mpv <file or folder># music player
+mpv <file or folder> # media player
+cmus # complete music player
 arandr # set up monitors
 lxappearance # set up theme
 pavucontrol # set up audio
