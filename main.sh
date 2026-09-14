@@ -12,7 +12,7 @@ fi
 sudo pacman -Syu --noconfirm
 
 sudo pacman -S --noconfirm base-devel fastfetch cloc less bc feh xss-lock dunst libnotify man-db man-pages gcc clang make bear gdb valgrind jdk21-openjdk maven gradle tree xclip git git-filter-repo zsh curl wget powerline-fonts ripgrep fd lua51 luarocks python python-pip python-pynvim neovim nodejs npm tmux zip unzip
-sudo pacman -S --noconfirm arandr vifm pavucontrol lxappearance pamixer brightnessctl xorg-xprop xorg-xset alacritty gimp md-tui zathura zathura-pdf-poppler
+sudo pacman -S --noconfirm arandr vifm mpv pavucontrol lxappearance pamixer brightnessctl xorg-xprop xorg-xset alacritty gimp md-tui zathura zathura-pdf-poppler
 
 sudo pacman -S --noconfirm gptfdisk exfatprogs
 sudo mkdir -p /mnt/usb
