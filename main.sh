@@ -653,12 +653,6 @@ set shuffle=true
 set repeat=true
 EOF
 
-mkdir -p "$HOME/.config/pip"
-cat >"$HOME/.config/pip/pip.conf" <<'EOF'
-[global]
-break-system-packages = true
-EOF
-
 cat >"$HOME/.clang-format" <<'EOF'
 BasedOnStyle: LLVM
 
