@@ -651,6 +651,9 @@ mkdir -p "$HOME/.config/cmus"
 cat >"$HOME/.config/cmus/rc" <<'EOF'
 set shuffle=true
 set repeat=true
+
+clear
+add ~/Music/
 EOF
 
 cat >"$HOME/.clang-format" <<'EOF'
