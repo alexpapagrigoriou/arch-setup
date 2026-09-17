@@ -29,6 +29,25 @@ Section "InputClass"
 EndSection
 EOF
 
+mkdir -p "$HOME/.local/bin"
+cat >"$HOME/.local/bin/lock" <<'EOF'
+#!/bin/bash
+
+if pgrep -x i3lock >/dev/null; then
+    exit
+fi
+
+i3lock --color "#000000"
+EOF
+chmod +x "$HOME/.local/bin/lock"
+
+cat >"$HOME/.local/bin/screen-off" <<'EOF'
+#!/bin/bash
+
+xset dpms force off
+EOF
+chmod +x "$HOME/.local/bin/screen-off"
+
 mkdir -p "$HOME/.config/i3"
 cat >"$HOME/.config/i3/config" <<'EOF'
 set $mod Mod1
@@ -152,7 +171,7 @@ bindsym $mod+Return exec --no-startup-id alacritty
 bindsym $mod+Shift+Return exec --no-startup-id alacritty --class="main"
 bindsym $mod+Shift+q kill
 bindsym $mod+d exec --no-startup-id dmenu_run
-bindsym $mod2+l exec --no-startup-id "sleep 0.2 && ~/.config/i3/screen-off.sh"
+bindsym $mod2+l exec --no-startup-id "sleep 0.2 && ~/.local/bin/screen-off"
 bindsym $mod2+Escape exec poweroff
 bindsym $mod2+Shift+Escape exec reboot
 bindsym $mod2+n exec --no-startup-id alacritty --class="nmtui" -e nmtui
@@ -195,27 +214,9 @@ exec_always --no-startup-id ~/.config/i3/monitors.sh
 exec_always --no-startup-id feh --bg-scale ~/.config/i3/wallpaper.png
 
 exec --no-startup-id xset b 0 0 0 s 00 dpms 0 0 0
-exec --no-startup-id xss-lock --transfer-sleep-lock -- ~/.config/i3/lock.sh
+exec --no-startup-id xss-lock --transfer-sleep-lock -- ~/.local/bin/lock
 exec --no-startup-id ~/.config/i3/idle.sh
 EOF
-
-cat >"$HOME/.config/i3/lock.sh" <<'EOF'
-#!/bin/bash
-
-if pgrep -x i3lock >/dev/null; then
-    exit
-fi
-
-i3lock --color "#000000"
-EOF
-chmod +x "$HOME/.config/i3/lock.sh"
-
-cat >"$HOME/.config/i3/screen-off.sh" <<'EOF'
-#!/bin/bash
-
-xset dpms force off
-EOF
-chmod +x "$HOME/.config/i3/screen-off.sh"
 
 mkdir -p "$HOME/.config/i3blocks"
 cat >"$HOME/.config/i3blocks/config" <<'EOF'
