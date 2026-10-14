@@ -568,6 +568,8 @@ export PATH="$JAVA_HOME/bin:$PATH"
 #export JAVA_TOOL_OPTIONS="--enable-native-access=ALL-UNNAMED"
 
 # Aliases
+alias c="clear"
+
 alias vim="nvim"
 
 alias jb="./gradlew build"
