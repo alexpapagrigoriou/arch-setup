@@ -1,0 +1,17 @@
+lsblk -f
+
+Find the nvme?n1p1 with vfat FAT32 for windows
+
+sudo mkdir -p /mnt/winesp
+sudo mount /dev/nvme?n1p1 /mnt/winesp
+sudo cp -r /mnt/winesp/EFI/Microsoft /boot/EFI/
+sudo umount /mnt/winesp
+sudo rm -rf /mnt/winesp
+
+
+Run:
+sudo nano /boot/loader/loader.conf
+
+Add:
+timeout 5
+auto-firmware no
