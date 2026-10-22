@@ -14,4 +14,5 @@ sudo nano /boot/loader/loader.conf
 
 Add:
 timeout 5
+console-mode max
 auto-firmware no
