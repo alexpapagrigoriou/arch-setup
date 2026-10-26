@@ -657,6 +657,7 @@ add ~/Music/
 EOF
 
 cat >"$HOME/.clang-format" <<'EOF'
+Language: C
 BasedOnStyle: LLVM
 
 IndentWidth: 4
@@ -664,16 +665,6 @@ TabWidth: 4
 UseTab: Never
 
 ColumnLimit: 0
-
-PointerAlignment: Right
-
-AllowShortIfStatementsOnASingleLine: false
-AllowShortEnumsOnASingleLine: false
-
-BreakBeforeBraces: Attach
-SpaceBeforeParens: ControlStatements
-SortIncludes: true
-SpacesInParentheses: false
 EOF
 
 cat >"$HOME/.gdbinit" <<'EOF'
